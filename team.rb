@@ -3,7 +3,7 @@ class Team
 	attr_reader :name, :wins, :draws, :loses
 
 	def initialize(name)
-		@name = name.capitalize
+		@name = name.strip
 		@wins = 0
 		@draws = 0
 		@loses = 0

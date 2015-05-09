@@ -6,7 +6,7 @@ class League
 	attr_reader :title
 
 	def initialize(title)
-		@title = title
+		@title = title.strip
 		@teams = []
 	end
 
@@ -20,6 +20,13 @@ class League
 		end
 	end
 
+	def load_teams(from_file)
+		File.readlines(from_file).each do |line|
+			name = line
+			team = Team.new(name)
+			add_team(team)
+		end
+	end
 end
 
 

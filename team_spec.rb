@@ -3,10 +3,10 @@ require_relative 'team'
 describe Team do
 
 	before do
-		@lazio = Team.new('lazio')
+		@lazio = Team.new(' Lazio ')
 	end
 
-	it "has a capitalized name" do
+	it "has a striped name" do
 		expect(@lazio.name).to eq('Lazio')
 	end
 
