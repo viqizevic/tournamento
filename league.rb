@@ -1,5 +1,6 @@
 require_relative 'team'
 require_relative 'match'
+require 'csv'
 
 class League
 
@@ -14,18 +15,31 @@ class League
 		@teams.push(team)
 	end
 
-	def print_teams
+	def print_standings
 		@teams.each do |team|
-			puts team
+			puts standings_entry(team)
 		end
 	end
 
 	def load_teams(from_file)
-		File.readlines(from_file).each do |line|
-			name = line
-			team = Team.new(name)
+		CSV.foreach(from_file) do |row|
+			team = Team.new(row[0])
 			add_team(team)
 		end
+	end
+
+	def save_standings(to_file="standings.txt")
+		File.open(to_file, "w") do |file|
+			file.puts "#{title} Standings:"
+			@teams.each do |team|
+				file.puts standings_entry(team)
+			end
+		end
+	end
+
+	def standings_entry(team)
+		name = team.name.ljust(20, ' ')
+		"#{name} W#{team.wins} D#{team.draws} L#{team.loses}"
 	end
 end
 

@@ -11,9 +11,11 @@ loop do
 	when /^\d+$/
 		#league.play(answer.to_i)
 	when 'q', 'quit', 'exit'
-		league.print_teams
+		league.print_standings
 		break
 	else
 		puts "Please enter a number or 'quit'"
   end
 end
+
+league.save_standings
