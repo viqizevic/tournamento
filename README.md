@@ -1,2 +1,3 @@
 # tournamento
-Tournament organizer and data management tool
+
+Tournament organizer tool
