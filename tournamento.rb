@@ -10,6 +10,7 @@ loop do
 	case answer
 	when /^\d+$/
 		#league.play(answer.to_i)
+		league.start_league
 	when 'q', 'quit', 'exit'
 		league.print_standings
 		break

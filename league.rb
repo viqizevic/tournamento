@@ -41,6 +41,20 @@ class League
 		name = team.name.ljust(20, ' ')
 		"#{name} W#{team.wins} D#{team.draws} L#{team.loses}"
 	end
+
+	def start_league
+		k = @teams.size/2
+		for i in 1..k do
+			u = @teams[i-1]
+			v = @teams[k+i-1]
+			m = random_match(u, v)
+			puts m.to_s
+		end
+	end
+
+	def random_match(team1, team2)
+		Match.new(team1, team2, rand(5), rand(5))
+	end
 end
 
 
