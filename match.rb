@@ -23,4 +23,8 @@ class Match
 		"#{@home_team.name} #{@home_goals}:#{@away_goals} #{@away_team.name}"
 	end
 
+	def same_home_and_away?(other)
+		other.home_team == @home_team and other.away_team == @away_team
+	end
+
 end

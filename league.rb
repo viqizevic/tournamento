@@ -9,6 +9,7 @@ class League
 	def initialize(title)
 		@title = title.strip
 		@teams = []
+		@finished_matches = []
 	end
 
 	def add_team(team)
@@ -50,10 +51,24 @@ class League
 			m = random_match(u, v)
 			puts m.to_s
 		end
+		puts finished?(Match.new(@teams[1], @teams[k], 1, 1))
+	end
+
+	def finished?(match)
+		puts match
+		finished = false
+		@finished_matches.each do |m|
+			if match.same_home_and_away?(m)
+				finished = true
+			end
+		end
+		finished
 	end
 
 	def random_match(team1, team2)
-		Match.new(team1, team2, rand(5), rand(5))
+		m = Match.new(team1, team2, rand(5), rand(5))
+		@finished_matches << m
+		m
 	end
 end
 
