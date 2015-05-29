@@ -49,4 +49,18 @@ describe Team do
 		expect(@lazio.matches.size).to eq(2)
 	end
 	
+	it "has correct points" do
+		expect(@lazio.points).to eq(0)
+		@lazio.win_one_game
+		expect(@lazio.points).to eq(3)
+		@lazio.play_draw
+		expect(@lazio.points).to eq(4)
+		@lazio.lose_one_game
+		expect(@lazio.points).to eq(4)
+		@lazio.win_one_game
+		expect(@lazio.points).to eq(7)
+		@lazio.play_draw
+		expect(@lazio.points).to eq(8)
+	end
+
 end

@@ -18,7 +18,7 @@ class League
 	end
 
 	def standings
-		s = standings_entry("Team", "W", "D", "L") + "\n"
+		s = standings_entry("Team", "W", "D", "L", "P") + "\n"
 		@teams.each do |team|
 			s += standings_team_entry(team) + "\n"
 		end
@@ -45,15 +45,16 @@ class League
 	end
 
 	def standings_team_entry(team)
-		standings_entry(team.name, team.wins, team.draws, team.loses)
+		standings_entry(team.name, team.wins, team.draws, team.loses, team.points)
 	end
 
-	def standings_entry(name, w, d, l)
+	def standings_entry(name, w, d, l, p)
 		name = name.ljust(20, ' ')
 		w = "#{w}".rjust(3, ' ')
 		d = "#{d}".rjust(3, ' ')
 		l = "#{l}".rjust(3, ' ')
-		"#{name} #{w} #{d} #{l}"
+		p = "#{p}".rjust(4, ' ')
+		"#{name} #{w} #{d} #{l} #{p}"
 	end
 
 	def start_league

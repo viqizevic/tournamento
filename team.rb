@@ -24,8 +24,13 @@ class Team
 		@loses += 1
 	end
 
+	def points
+		p = @wins * 3
+		p += @draws * 1
+	end
+
 	def to_s
-		"#{@name} (W#{@wins} D#{@draws} L#{@loses})"
+		"#{@name} (W#{@wins} D#{@draws} L#{@loses} P#{points})"
 	end
 
 	def add_match(match)
