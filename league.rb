@@ -16,10 +16,17 @@ class League
 		@teams.push(team)
 	end
 
-	def print_standings
+	def standings
+		s = standings_entry("Team", "W", "D", "L") + "\n"
 		@teams.each do |team|
-			puts standings_entry(team)
+			s += standings_team_entry(team) + "\n"
 		end
+		s
+	end
+
+	def print_standings
+		puts "Table #{title}"
+		puts standings
 	end
 
 	def load_teams(from_file)
@@ -32,15 +39,20 @@ class League
 	def save_standings(to_file="standings.txt")
 		File.open(to_file, "w") do |file|
 			file.puts "#{title} Standings:"
-			@teams.each do |team|
-				file.puts standings_entry(team)
-			end
+			file.puts standings
 		end
 	end
 
-	def standings_entry(team)
-		name = team.name.ljust(20, ' ')
-		"#{name} W#{team.wins} D#{team.draws} L#{team.loses}"
+	def standings_team_entry(team)
+		standings_entry(team.name, team.wins, team.draws, team.loses)
+	end
+
+	def standings_entry(name, w, d, l)
+		name = name.ljust(20, ' ')
+		w = "#{w}".rjust(3, ' ')
+		d = "#{d}".rjust(3, ' ')
+		l = "#{l}".rjust(3, ' ')
+		"#{name} #{w} #{d} #{l}"
 	end
 
 	def start_league

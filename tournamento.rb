@@ -1,7 +1,7 @@
 require_relative("league")
 
 
-league = League.new("Serie A")
+league = League.new("League")
 league.load_teams(ARGV.shift || "teams.csv")
 
 loop do
@@ -12,6 +12,7 @@ loop do
 		#league.play(answer.to_i)
 		league.start_league
 	when 'q', 'quit', 'exit'
+		puts "\n"
 		league.print_standings
 		break
 	else
