@@ -1,4 +1,5 @@
 require_relative 'team'
+require_relative 'match'
 
 describe Team do
 
@@ -35,6 +36,17 @@ describe Team do
 		expect(@lazio.wins).to eq(0)
 		expect(@lazio.draws).to eq(1)
 		expect(@lazio.loses).to eq(0)
+	end
+
+	it "has no matches at all initially" do
+		expect(@lazio.matches.size).to eq(0)
+	end
+
+	it "saves matches" do
+		juve = Team.new("Juve")
+		Match.new(@lazio, juve, 2, 0)
+		Match.new(juve, @lazio, 0, 1)
+		expect(@lazio.matches.size).to eq(2)
 	end
 	
 end

@@ -17,14 +17,16 @@ class Match
 			away_team.win_one_game
 			home_team.lose_one_game
 		end
+		home_team.add_match(self)
+		away_team.add_match(self)
 	end
 
 	def to_s
 		"#{@home_team.name} #{@home_goals}:#{@away_goals} #{@away_team.name}"
 	end
 
-	def same_home_and_away?(other)
-		other.home_team == @home_team and other.away_team == @away_team
+	def same_home_and_away?(home, away)
+		home == @home_team and away == @away_team
 	end
 
 end

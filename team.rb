@@ -1,12 +1,15 @@
+require_relative 'match'
+
 class Team
 
-	attr_reader :name, :wins, :draws, :loses
+	attr_reader :name, :wins, :draws, :loses, :matches
 
 	def initialize(name)
 		@name = name.strip
 		@wins = 0
 		@draws = 0
 		@loses = 0
+		@matches = []
 	end
 
 	def win_one_game
@@ -23,6 +26,11 @@ class Team
 
 	def to_s
 		"#{@name} (W#{@wins} D#{@draws} L#{@loses})"
+	end
+
+	def add_match(match)
+		@matches << match
+		# TODO: should check if the match really belongs to this team
 	end
 
 end

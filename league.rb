@@ -8,6 +8,7 @@ class League
 
 	def initialize(title)
 		@title = title.strip
+		# TODO: need a hash map actually for the teams
 		@teams = []
 		@finished_matches = []
 	end
@@ -56,19 +57,31 @@ class League
 	end
 
 	def start_league
-		k = @teams.size/2
-		for i in 1..k do
-			u = @teams[i-1]
-			v = @teams[k+i-1]
-			m = random_match(u, v)
+		n_matches_pro_matchday = @teams.size/2
+		n_matchdays = 2 * (@teams.size - 1)
+		for i in 1..n_matchdays do
+			matchday_matches = []
+			@teams.each do |u|
+				if matchday_matches.size >= n_matches_pro_matchday
+					break
+				end
+				@teams.each do |v|
+					if u != v
+						if not finished_match?(u, v)
+							m = random_match(u, v)
+							puts m
+							matchday_matches << m
+						end
+					end
+				end
+			end
 		end
 	end
 
-	def finished?(match)
-		puts match
+	def finished_match?(home, away)
 		finished = false
-		@finished_matches.each do |m|
-			if match.same_home_and_away?(m)
+		@finished_matches.each do |match|
+			if match.same_home_and_away?(home, away)
 				finished = true
 			end
 		end

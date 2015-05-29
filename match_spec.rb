@@ -41,13 +41,12 @@ describe Match do
 	it "has correct method to check matches with same constellation" do
 		m1 = Match.new(@juve, @lazio, 1, 1)
 		m2 = Match.new(@juve, @lazio, 0, 1)
-		expect(m1.same_home_and_away?(m1)).to be_truthy
-		expect(m1.same_home_and_away?(m2)).to be_truthy
-		expect(m2.same_home_and_away?(m1)).to be_truthy
+		expect(m1.same_home_and_away?(@juve, @lazio)).to be_truthy
+		expect(m2.same_home_and_away?(@juve, @lazio)).to be_truthy
 
 		m3 = Match.new(@lazio, @juve, 1, 0)
-		expect(m1.same_home_and_away?(m3)).to be_falsey
-		expect(m2.same_home_and_away?(m3)).to be_falsey
+		expect(m1.same_home_and_away?(@lazio, @juve)).to be_falsey
+		expect(m2.same_home_and_away?(@lazio, @juve)).to be_falsey
 	end
 
 end
