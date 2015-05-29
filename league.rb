@@ -4,7 +4,7 @@ require 'csv'
 
 class League
 
-	attr_reader :title
+	attr_reader :title, :teams, :finished_matches
 
 	def initialize(title)
 		@title = title.strip
@@ -61,7 +61,6 @@ class League
 			u = @teams[i-1]
 			v = @teams[k+i-1]
 			m = random_match(u, v)
-			puts m.to_s
 		end
 	end
 
