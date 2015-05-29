@@ -63,7 +63,6 @@ class League
 			m = random_match(u, v)
 			puts m.to_s
 		end
-		puts finished?(Match.new(@teams[1], @teams[k], 1, 1))
 	end
 
 	def finished?(match)
@@ -87,16 +86,15 @@ end
 
 if __FILE__ == $0
 	lazio = Team.new('Lazio')
-	
 	juve = Team.new('Juventus')
-	
 	teams = [lazio, juve]
 	
-	m = Match.new(lazio, juve, 2, 0)
-	
 	l = League.new('Serie A')
-	l.add_team(lazio)
-	l.add_team(juve)
-	l.print_teams
+	teams.each do |t|
+		l.add_team(t)
+	end
+
+	l.start_league
+	l.print_standings
 end
 
