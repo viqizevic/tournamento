@@ -22,7 +22,10 @@ class Match
 	end
 
 	def to_s
-		"#{@home_team.name} #{@home_goals}:#{@away_goals} #{@away_team.name}"
+		l = 10
+		h = @home_team.name.ljust(l, ' ')
+		a = @away_team.name.rjust(l, ' ')
+		"#{h} #{@home_goals}:#{@away_goals} #{a}"
 	end
 
 	def same_home_and_away?(home, away)

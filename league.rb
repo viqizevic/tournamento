@@ -19,7 +19,8 @@ class League
 
 	def standings
 		s = standings_entry("Team", "G", "W", "D", "L", "P") + "\n"
-		@teams.each do |team|
+		sorted = @teams.sort { |a, b| b.points <=> a.points }
+		sorted.each do |team|
 			s += standings_team_entry(team) + "\n"
 		end
 		s
@@ -70,7 +71,7 @@ class League
 				if matchday_matches.size >= n_matches_pro_matchday
 					break
 				end
-				groups.each do |v|
+				groups.reverse_each do |v|
 					if u != v and not played_teams.include?(u.name) and not played_teams.include?(v.name)
 						if not finished_match?(u, v)
 							m = random_match(u, v)
