@@ -48,6 +48,16 @@ describe Team do
 		Match.new(juve, @lazio, 0, 1)
 		expect(@lazio.matches.size).to eq(2)
 	end
+
+	it "has correct number of games" do
+		expect(@lazio.number_of_games).to eq(0)
+		@lazio.win_one_game
+		expect(@lazio.number_of_games).to eq(1)
+		@lazio.play_draw
+		expect(@lazio.number_of_games).to eq(2)
+		@lazio.lose_one_game
+		expect(@lazio.number_of_games).to eq(3)
+	end
 	
 	it "has correct points" do
 		expect(@lazio.points).to eq(0)

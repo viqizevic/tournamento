@@ -24,6 +24,10 @@ class Team
 		@loses += 1
 	end
 
+	def number_of_games
+		@wins + @draws + @loses
+	end
+
 	def points
 		p = @wins * 3
 		p += @draws * 1

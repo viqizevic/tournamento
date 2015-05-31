@@ -18,7 +18,7 @@ class League
 	end
 
 	def standings
-		s = standings_entry("Team", "W", "D", "L", "P") + "\n"
+		s = standings_entry("Team", "G", "W", "D", "L", "P") + "\n"
 		@teams.each do |team|
 			s += standings_team_entry(team) + "\n"
 		end
@@ -45,37 +45,45 @@ class League
 	end
 
 	def standings_team_entry(team)
-		standings_entry(team.name, team.wins, team.draws, team.loses, team.points)
+		standings_entry(team.name, team.number_of_games, team.wins, team.draws, team.loses, team.points)
 	end
 
-	def standings_entry(name, w, d, l, p)
+	def standings_entry(name, g, w, d, l, p)
 		name = name.ljust(20, ' ')
+		g = "#{g}".rjust(3, ' ')
 		w = "#{w}".rjust(3, ' ')
 		d = "#{d}".rjust(3, ' ')
 		l = "#{l}".rjust(3, ' ')
 		p = "#{p}".rjust(4, ' ')
-		"#{name} #{w} #{d} #{l} #{p}"
+		"#{name} #{g} #{w} #{d} #{l} #{p}"
 	end
 
 	def start_league
 		n_matches_pro_matchday = @teams.size/2
 		n_matchdays = 2 * (@teams.size - 1)
+		groups = @teams.clone
 		for i in 1..n_matchdays do
 			matchday_matches = []
-			@teams.each do |u|
+			played_teams = []
+			puts "Matchday #{i}"
+			groups.each do |u|
 				if matchday_matches.size >= n_matches_pro_matchday
 					break
 				end
-				@teams.each do |v|
-					if u != v
+				groups.each do |v|
+					if u != v and not played_teams.include?(u.name) and not played_teams.include?(v.name)
 						if not finished_match?(u, v)
 							m = random_match(u, v)
 							puts m
 							matchday_matches << m
+							played_teams << u.name
+							played_teams << v.name
 						end
 					end
 				end
 			end
+			t = groups.shift
+			groups << t
 		end
 	end
 
