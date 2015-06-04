@@ -13,11 +13,7 @@ class League
 	end
 
 	def teams
-		t = []
-		@teams.each do |name, team|
-			t << team
-		end
-		t
+		@teams.values
 	end
 
 	def add_team(team)
