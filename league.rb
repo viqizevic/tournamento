@@ -12,6 +12,10 @@ class League
 		@finished_matches = []
 	end
 
+	def team_names
+		@teams.keys
+	end
+
 	def teams
 		@teams.values
 	end
@@ -64,7 +68,7 @@ class League
 
 	def start_league
 		fixture_plan.each do |day, matches|
-			puts "Matchday #{day}"
+			puts "\nMatchday #{day}"
 			matches.each do |match|
 				u = match[:home]
 				v = match[:away]
@@ -73,6 +77,24 @@ class League
 				else
 					m = random_match(u, v)
 					puts m
+				end
+			end
+		end
+	end
+
+	def print_fixture_plan
+		fixture_plan.each do |day, matches|
+			puts "\nMatchday #{day}"
+			matches.each do |match|
+				u = match[:home]
+				v = match[:away]
+				l = 10
+				h = u.name.ljust(l, ' ')
+				a = v.name.rjust(l, ' ')
+				if finished_match?(u, v)
+					puts "Finished: #{h} vs #{a}"
+				else
+					puts "#{h} vs #{a}"
 				end
 			end
 		end
