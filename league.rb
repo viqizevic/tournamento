@@ -60,31 +60,45 @@ class League
 	end
 
 	def start_league
-		n_matches_pro_matchday = @teams.size/2
-		n_matchdays = 2 * (@teams.size - 1)
-		groups = @teams.clone
+		n_teams = @teams.size
+		n_matchdays = 2*(n_teams-1)
+		group = @teams.clone
+		fix = group.shift
+		top = group.shift
+		first_group = []
+		second_group = []
+		group_size = group.size/2
+		for i in 1..group_size do
+			first_group << group.shift
+			second_group << group.shift
+		end
 		for i in 1..n_matchdays do
-			matchday_matches = []
-			played_teams = []
 			puts "Matchday #{i}"
-			groups.each do |u|
-				if matchday_matches.size >= n_matches_pro_matchday
-					break
-				end
-				groups.reverse_each do |v|
-					if u != v and not played_teams.include?(u.name) and not played_teams.include?(v.name)
-						if not finished_match?(u, v)
-							m = random_match(u, v)
-							puts m
-							matchday_matches << m
-							played_teams << u.name
-							played_teams << v.name
-						end
-					end
-				end
+			u = top
+			v = fix
+			if i.odd?
+				u = fix
+				v = top
 			end
-			t = groups.shift
-			groups << t
+			m = random_match(u, v)
+			puts m
+			for j in 0..first_group.size-1 do
+				u = first_group[j]
+				v = second_group[j]
+				switch = j.even?
+				if i > n_matchdays/2
+					switch = j.odd?
+				end
+				if switch
+					u = second_group[j]
+					v = first_group[j]
+				end
+				m = random_match(u, v)
+				puts m
+			end
+			second_group.unshift(top)
+			first_group << second_group.pop
+			top = first_group.shift
 		end
 	end
 
