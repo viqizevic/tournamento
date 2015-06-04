@@ -4,22 +4,29 @@ require 'csv'
 
 class League
 
-	attr_reader :title, :teams, :finished_matches
+	attr_reader :title, :finished_matches
 
 	def initialize(title)
 		@title = title.strip
-		# TODO: need a hash map actually for the teams
-		@teams = []
+		@teams = Hash.new
 		@finished_matches = []
 	end
 
+	def teams
+		t = []
+		@teams.each do |name, team|
+			t << team
+		end
+		t
+	end
+
 	def add_team(team)
-		@teams.push(team)
+		@teams[team.name] = team
 	end
 
 	def standings
 		s = standings_entry("Team", "G", "W", "D", "L", "P") + "\n"
-		sorted = @teams.sort { |a, b| b.points <=> a.points }
+		sorted = teams.sort { |a, b| b.points <=> a.points }
 		sorted.each do |team|
 			s += standings_team_entry(team) + "\n"
 		end
@@ -60,9 +67,26 @@ class League
 	end
 
 	def start_league
+		fixture_plan.each do |day, matches|
+			puts "Matchday #{day}"
+			matches.each do |match|
+				u = match[:home]
+				v = match[:away]
+				if finished_match?(u, v)
+					puts "Cannot play the match #{u.name} vs #{v.name} again!"
+				else
+					m = random_match(u, v)
+					puts m
+				end
+			end
+		end
+	end
+
+	def fixture_plan
+		plan = Hash.new
 		n_teams = @teams.size
 		n_matchdays = 2*(n_teams-1)
-		group = @teams.clone
+		group = teams
 		fix = group.shift
 		top = group.shift
 		first_group = []
@@ -73,33 +97,31 @@ class League
 			second_group << group.shift
 		end
 		for i in 1..n_matchdays do
-			puts "Matchday #{i}"
-			u = top
-			v = fix
+			matches = []
+			m = { home: top, away: fix }
 			if i.odd?
-				u = fix
-				v = top
+				m = { home: fix, away: top }
 			end
-			m = random_match(u, v)
-			puts m
+			matches << m
 			for j in 0..first_group.size-1 do
 				u = first_group[j]
 				v = second_group[j]
+				m = { home: u, away: v }
 				switch = j.even?
 				if i > n_matchdays/2
 					switch = j.odd?
 				end
 				if switch
-					u = second_group[j]
-					v = first_group[j]
+					m = { home: v, away: u }
 				end
-				m = random_match(u, v)
-				puts m
+				matches << m
 			end
 			second_group.unshift(top)
 			first_group << second_group.pop
 			top = first_group.shift
+			plan[i] = matches
 		end
+		plan
 	end
 
 	def finished_match?(home, away)
