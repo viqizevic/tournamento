@@ -83,20 +83,31 @@ class League
 	end
 
 	def print_fixture_plan
+		puts fixture_plan_s
+	end
+
+	def fixture_plan_s
+		s = ""
 		fixture_plan.each do |day, matches|
-			puts "\nMatchday #{day}"
+			s += "# Matchday #{day}\n"
 			matches.each do |match|
 				u = match[:home]
 				v = match[:away]
 				l = 10
 				h = u.name.ljust(l, ' ')
 				a = v.name.rjust(l, ' ')
-				if finished_match?(u, v)
-					puts "Finished: #{h} vs #{a}"
-				else
-					puts "#{h} vs #{a}"
+				if not finished_match?(u, v)
+					s += "#{h} vs #{a}\n"
 				end
 			end
+			s += "\n"
+		end
+		s
+	end
+
+	def save_fixture_plan(to_file="fixture_plan.txt")
+		File.open(to_file, "w") do |file|
+			file.puts fixture_plan_s
 		end
 	end
 

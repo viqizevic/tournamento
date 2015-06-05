@@ -12,6 +12,7 @@ loop do
     case answer
     when '1'
     	league.print_fixture_plan
+        league.save_fixture_plan
     when '2'
 		league.start_league
     when 'quit', 'exit', 'q'
