@@ -27,8 +27,10 @@ class League
 	def standings
 		s = standings_entry("Team", "G", "W", "D", "L", "P") + "\n"
 		sorted = teams.sort { |a, b| b.points <=> a.points }
+                i = 1
 		sorted.each do |team|
-			s += standings_team_entry(team) + "\n"
+		  s += "#{i} " + standings_team_entry(team) + "\n"
+                  i = i + 1
 		end
 		s
 	end
